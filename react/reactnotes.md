@@ -40,11 +40,12 @@ operations are needed to update the rendered app.
 
 Although Fiber is a ground-up rewrite of the reconciler, the high-level algorithm described in the React docs will be largely the same. 
 
-# The key points are:
-1) Different component types are assumed to generate substantially different trees. React will not attempt to diff them, but rather replace the old tree completely.
+## The key points are:
+1) Different component types are assumed to generate substantially different trees. React will not attempt to diff them, but rather 
+replace the old tree completely.
 2) Diffing of lists is performed using keys. Keys should be "stable, predictable, and unique."
 
-# some more important points -
+## some more important points -
 1. The createRoot create's its own DOM and then compare it with the web browser's DOM and only update those components which are 
 actually updated.
 2. But the browser removes the whole DOM and then recrates the whole DOM with the updated values this is called reload.
@@ -56,7 +57,7 @@ actually updated.
 8. Reconciliation is the algo behind what popularly known as the Virtual-DOM.
 9. In UI it is not necessary for every update to be applied immediately. 
 
-<!-- Resources - https://github.com/acdlite/react-fiber-architecture -->
+Resources - https://github.com/acdlite/react-fiber-architecture
 
 # React props 
 -: to send data from one component to another.
@@ -82,3 +83,40 @@ Third Call: setCount(count + 1) schedules yet another state update to set count 
 In case of functional updater syntax React ensures that changes are made to the latest state of the count hence each function gets access to the latest state of the count variable:
 First Call: setCount(count =>count+1) schedules a state update to set count to 70
 Second Call : schedules a state update to set count to (70+1) because count is now 70 in this scope 
+
+# useCallback , useref , useEffect
+## useCallback
+You need to pass two things to useCallback:
+1) A function definition that you want to cache between re-renders.
+2) A list of dependencies including every value within your component that’s used inside your function.
+On the initial render, the returned function you’ll get from useCallback will be the function you passed.
+
+On the following renders, React will compare the dependencies with the dependencies you passed during the previous render. If none of the dependencies have changed (compared with Object.is), useCallback will return the same function as before. Otherwise, useCallback will return the function you passed on this render.
+
+In other words, useCallback caches a function between re-renders until its dependencies change.
+
+## useEffect -->
+useEffect is a React Hook that lets you synchronize a component with an external system.
+useEffect(setup, dependencies?)
+You need to pass two arguments to useEffect:
+ 1) A setup function with setup code that connects to that system.
+It should return a cleanup function with cleanup code that disconnects from that system.
+ 2) A list of dependencies including every value from your component used inside of those functions.
+React calls your setup and cleanup functions whenever it’s necessary, which may happen multiple times:
+
+Your setup code runs when your component is added to the page (mounts).
+After every re-render of your component where the dependencies have changed:
+First, your cleanup code runs with the old props and state.
+Then, your setup code runs with the new props and state.
+Your cleanup code runs one final time after your component is removed from the page (unmounts).
+
+## useRef
+useRef is a React Hook that lets you reference a value that’s not needed for rendering.
+
+const ref = useRef(initialValue)
+* Parameters 
+initialValue: The value you want the ref object’s current property to be initially. It can be a value of any type. This argument is ignored after the initial render.
+* Returns 
+useRef returns an object with a single property:
+* current: Initially, it’s set to the initialValue you have passed. You can later set it to something else. If you pass the ref object to React as a ref attribute to a JSX node, React will set its current property.
+On the next renders, useRef will return the same object.
