@@ -48,7 +48,7 @@ replace the old tree completely.
 ## some more important points -
 1. The createRoot create's its own DOM and then compare it with the web browser's DOM and only update those components which are 
 actually updated.
-2. But the browser removes the whole DOM and then recrates the whole DOM with the updated values this is called reload.
+2. But the browser removes the whole DOM and then recreates the whole DOM with the updated values this is called reload.
 3. However virtual DOM tracks whole DOM like a tree like structure and updates only those values which were only changed.
 4. But some values depends on network call so if we update a value it might get update immediately via a network call.
 5. So we will have to update it again. To avoid this overhead we can drop the updation calls for the immediate value update.
@@ -120,3 +120,35 @@ initialValue: The value you want the ref object’s current property to be initi
 useRef returns an object with a single property:
 * current: Initially, it’s set to the initialValue you have passed. You can later set it to something else. If you pass the ref object to React as a ref attribute to a JSX node, React will set its current property.
 On the next renders, useRef will return the same object.
+
+## difference between link in react-router-dom and a tag
+anchor tag or <a> tag is not used in React as it refreshes the whole page which is not the concept of react, that's why Link tag is used in react which is imported from react-router-dom 
+ React also provides NavLink with some additional features like highlighting the active nav page.
+
+## useparams
+The useParams hook returns an object of key/value pairs of the dynamic params from the current URL that were matched by the <Route path>. Child routes inherit all params from their parent routes.
+
+## UseloaderData
+This hook provides the value returned from your route loader.
+After route actions are called, the data will be revalidated automatically and return the latest result from your loader.
+
+Note that useLoaderData does not initiate a fetch. It simply reads the result of a fetch React Router manages internally, so you don't need to worry about it refetching when it re-renders for reasons outside of routing.
+
+This also means data returned is stable between renders, so you can safely pass it to dependency arrays in React hooks like useEffect. It only changes when the loader is called again after actions or certain navigations. In these cases the identity will change (even if the values don't).
+
+You can use this hook in any component or any custom hook, not just the Route element. It will return the data from the nearest route on context.
+
+To get data from any active route on the page, see useRouteLoaderData.
+
+## ContextAPI
+The useContext hook in React provides an easy way to share data between components without having to pass props manually at every level. It allows you to access the value of a context in any component,
+1. Create a Context: First, you create a context using the React.createContext() method. This provides a way to define a "global" value that can be shared across components.
+
+2. Provide the Context Value: You use the Provider component that comes with the context to specify the value of the context. The Provider wraps the components that need access to the context.
+
+3. Consume the Context Value: Any component can use the useContext hook to access the context's value without passing props.yougotthis
+
+## What is Prop Drilling?
+Prop drilling, also known as "threading props" or "component chaining," refers to the process of passing data from a parent component down to nested child components through props.
+
+Prop drilling occurs when a prop needs to be passed through several layers of nested components to reach a deeply nested child component that actually needs the prop. Each intermediary component in the hierarchy has to pass the prop down, even if it doesn't use the prop itself.

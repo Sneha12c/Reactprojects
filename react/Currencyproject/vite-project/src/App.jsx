@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {InputBox} from './components/InputBox.jsx';
+import {InputBox} from './components/InputBox';
 import usecurinfo from './hooks/usecurinfo';
 import './App.css';
 
@@ -26,7 +26,7 @@ function App() {
         <div
             className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
             style={{
-                backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvE-62Nlt36E-VbUStqjfWmh1B2JMmJOEOQ&s')`,
+                // backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvE-62Nlt36E-VbUStqjfWmh1B2JMmJOEOQ&s')`,
             }}
         >
             <div className="w-full">
@@ -41,8 +41,9 @@ function App() {
                             <InputBox
                                 label="From"
                                 amount={Amount}
+                                onamountchange = {(Amount)=> setAmount(Amount)}
+                                oncurrencychange={(currency) => (setForm(currency))}
                                 currencyoption={curoptions}
-                                oncurrencychange={(currency) => (setAmount(Amount))}
                                 selectcurrency={from}
                             />
                         </div>
@@ -59,8 +60,8 @@ function App() {
                             <InputBox
                                 label="To"
                                 amount={Amount}
-                                currencyoption={curoptions}
-                                oncurrencychange={(currency) => (setAmount(convertedAmount))}
+                                oncurrencychange={(currency) => (setTo(currency))}
+                                currencyoptions={curoptions}
                                 selectcurrency={to}
                             />
                         </div>
