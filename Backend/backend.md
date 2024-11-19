@@ -87,3 +87,31 @@ requesting or not. They are usually expired tokens with a short validity period.
 2) Refresh token: The refresh token is used to generate a new access token. Typically, if the access token has an expiration date, once 
 it expires, the user would have to authenticate again to obtain an access token. With refresh token, this step can be skipped and with 
 a request to the API get a new access token that allows the user to continue accessing the application resources.
+
+
+### Mongoose.findbyid
+Model.findByIdAndUpdate(id, update, options, callback);
+Parameters:
+id: The ID of the document you want to update.
+update: An object containing the fields and values you want to update.
+options: (Optional) An object specifying options such as new, upsert, runValidators, etc.
+new: If set to true, returns the modified document rather than the original. Defaults to false.
+upsert: If true, creates the document if it doesn’t exist. Defaults to false.
+runValidators: If true, runs schema validation during the update. Defaults to false.
+callback: (Optional) A callback function that is called after the update is complete. Alternatively, you can use .then() and .catch() for promises.
+
+### Mongoose.findOne
+Returns one document that satisfies the specified query criteria on the collection or view.
+The returned document may vary depending on the number of documents that match the query criteria, and the query plan used
+
+```
+db.collection.findOne( <query>, <projection>, <options> )
+```
+
+### Aggregation Pipeline
+An aggregation pipeline consists of one or more stages that process documents:
+1) Each stage performs an operation on the input documents. For example, a stage can filter documents, group documents, and calculate values.
+2) The documents that are output from a stage are passed to the next stage.
+3) An aggregation pipeline can return results for groups of documents. For example, return the total, average, maximum, and minimum values.
+
+### 

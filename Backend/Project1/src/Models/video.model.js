@@ -32,6 +32,10 @@ const videoSchema = Mongoose.Schema({
     type : Mongoose.Schema.Types.ObjectId,
     ref: "User",
    },
+   duration: {
+    type: Number,  
+    required: true
+    },
 }, {timestamps : true})
 
 videoSchema.plugin(mongooseAggregation);
