@@ -12,7 +12,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
     
     const user = await User.findOne(userId);
 
-    const allvideosaggregate = await Video.aggregate(
+    const allvideosaggregate = await Video.aggregate([
         {
             $match : {
                 owner : new Mongoose.Types.ObjectId(userId),
@@ -33,7 +33,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
         {
            $limit : parseInt(limit)
         }
-    )
+    ])
     
     Video.aggregatePaginate(allvideosaggregate , {page , limit} ).then(
         (result)=>{
@@ -50,7 +50,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description} = req.body;
-    // TODO: get video, upload to cloudinary, create video
     if(!title && !description){
         throw new Apierror(400 , "All feilds are required");
     }

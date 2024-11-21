@@ -37,13 +37,13 @@ const getUserTweets = asyncHandler(async (req, res) => {
       throw new Apierror(400 , "User doesn't exist");
     }
 
-    const getalltweet = await Tweet.aggregate(
+    const getalltweet = await Tweet.aggregate([
         {
             $match : {
                 owner : userId
             }
         }
-    )
+    ])
     if(!getalltweet){
      throw new Apierror(500 , "Error while fetching tweets");
     }
@@ -65,8 +65,8 @@ const updateTweet = asyncHandler(async (req, res) => {
     
     const currtweet = await Tweet.getById(tweetId);
 
-    if(currtweet.owner.to_String() === req.user._id.to_String()){
-     throw new Apierror(404 , "All ");
+    if(currtweet.owner.to_String() !== req.user._id.to_String()){
+     throw new Apierror(404 , "You don't have permission to change tweet");
     }
 
     const updatedtweet = await Tweet.findByIdAndUpdate(tweetId , 
@@ -97,7 +97,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     if (!tweet) {
         throw new Apierror(404, "no tweet found!");
     }
-    if(tweet.owner.to_String() === req.user._id.to_String()){
+    if(tweet.owner.to_String() !== req.user._id.to_String()){
      throw new Apierror(400 , "You don't have permission to delete tweet");
     }
 
